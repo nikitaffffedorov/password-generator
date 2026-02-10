@@ -2,134 +2,182 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🔐 SecurePass - Генератор безопасных паролей</title>
     <style>
-        /* СБРОС СТИЛЕЙ */
+        /* СБРОС СТИЛЕЙ ДЛЯ МОБИЛЬНЫХ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
         }
 
-        /* ОСНОВНЫЕ СТИЛИ */
+        /* ОПТИМИЗАЦИЯ ДЛЯ МОБИЛЬНЫХ */
+        html {
+            font-size: 16px;
+            overflow-x: hidden;
+        }
+
         body {
             background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%);
             color: #333;
             min-height: 100vh;
-            padding: 20px;
+            padding: 12px;
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            line-height: 1.5;
         }
 
+        /* АДАПТИВНЫЙ КОНТЕЙНЕР */
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             width: 100%;
-            max-width: 1000px;
+            max-width: 100vw;
             overflow: hidden;
-            animation: fadeIn 0.8s ease;
+            animation: fadeIn 0.6s ease;
+            margin: 0 auto;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ШАПКА */
+        /* АДАПТИВНАЯ ШАПКА */
         header {
             background: linear-gradient(90deg, #2c3e50, #34495e);
             color: white;
-            padding: 25px 40px;
+            padding: 18px 20px;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
+        @media (max-width: 480px) {
+            header {
+                padding: 15px 12px;
+            }
+        }
+
         header::before {
             content: "🔐🔒🔑";
             position: absolute;
-            font-size: 60px;
+            font-size: 40px;
             opacity: 0.1;
-            top: 10px;
-            right: 20px;
+            top: 5px;
+            right: 10px;
         }
 
         .logo {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
+            gap: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
         }
 
         .logo-icon {
-            font-size: 2.8rem;
+            font-size: 2rem;
             color: #3498db;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
         }
 
         h1 {
-            font-size: 2.4rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+            word-break: break-word;
         }
 
-        .subtitle {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-top: 5px;
-        }
-
-        /* ОСНОВНОЙ КОНТЕНТ */
-        .app-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-            min-height: 600px;
-        }
-
-        @media (max-width: 900px) {
-            .app-container {
-                grid-template-columns: 1fr;
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.4rem;
             }
         }
 
-        /* ЛЕВАЯ ПАНЕЛЬ - НАСТРОЙКИ */
+        .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 4px;
+            line-height: 1.4;
+            padding: 0 10px;
+        }
+
+        /* ОСНОВНОЙ КОНТЕНТ - СТЕК НА МОБИЛЬНЫХ */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            min-height: auto;
+        }
+
+        @media (min-width: 768px) {
+            .app-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* АДАПТИВНЫЕ ПАНЕЛИ */
+        .settings-panel,
+        .result-panel {
+            padding: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .settings-panel,
+            .result-panel {
+                padding: 15px 12px;
+            }
+        }
+
         .settings-panel {
             background: #f8fafc;
-            padding: 30px;
-            border-right: 2px solid #e8eaed;
+            border-bottom: 2px solid #e8eaed;
+        }
+
+        @media (min-width: 768px) {
+            .settings-panel {
+                border-right: 2px solid #e8eaed;
+                border-bottom: none;
+            }
         }
 
         .panel-title {
             color: #2c3e50;
-            font-size: 1.5rem;
-            margin-bottom: 25px;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .panel-title i {
-            color: #3498db;
+        @media (max-width: 480px) {
+            .panel-title {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
         }
 
-        /* СЛАЙДЕР ДЛИНЫ */
+        /* АДАПТИВНЫЙ СЛАЙДЕР ДЛИНЫ */
         .slider-container {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid #e8eaed;
         }
 
@@ -137,134 +185,150 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .length-value {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #3498db;
             background: #ebf5fb;
-            padding: 5px 15px;
-            border-radius: 10px;
-            min-width: 60px;
+            padding: 4px 12px;
+            border-radius: 8px;
+            min-width: 50px;
             text-align: center;
         }
 
         input[type="range"] {
             width: 100%;
-            height: 12px;
+            height: 10px;
             -webkit-appearance: none;
             background: linear-gradient(90deg, #3498db, #2ecc71);
-            border-radius: 10px;
+            border-radius: 8px;
             outline: none;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             background: white;
             border: 3px solid #3498db;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.5);
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.5);
         }
 
         .slider-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 8px;
             color: #7f8c8d;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
-        /* ЧЕКБОКСЫ */
+        /* АДАПТИВНЫЕ ЧЕКБОКСЫ */
         .checkbox-section {
             background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         .checkbox-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 12px;
         }
 
         .checkbox-item {
             display: flex;
             align-items: center;
-            padding: 15px;
+            padding: 14px;
             background: #f8f9fa;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 2px solid #e8eaed;
-            transition: all 0.3s;
+            transition: all 0.2s;
             cursor: pointer;
+            flex-wrap: wrap;
         }
 
         .checkbox-item:hover {
             border-color: #3498db;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.1);
+            transform: translateY(-1px);
         }
 
         .checkbox-item input {
-            width: 20px;
-            height: 20px;
-            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .checkbox-label {
             flex-grow: 1;
             font-weight: 500;
             color: #2c3e50;
+            font-size: 0.95rem;
         }
 
         .char-example {
             font-family: 'Consolas', monospace;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #7f8c8d;
             background: #ecf0f1;
-            padding: 3px 8px;
-            border-radius: 5px;
-            margin-left: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 4px;
+            width: 100%;
+            display: none;
         }
 
-        /* КНОПКИ ГЕНЕРАЦИИ */
+        @media (min-width: 480px) {
+            .char-example {
+                display: inline-block;
+                margin-left: 10px;
+                margin-top: 0;
+                width: auto;
+            }
+        }
+
+        /* АДАПТИВНЫЕ КНОПКИ */
         .generate-buttons {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
         .btn {
-            padding: 18px;
+            padding: 16px;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 10px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
+            width: 100%;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            box-shadow: 0 5px 20px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.25);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        .btn-primary:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.35);
         }
 
         .btn-secondary {
@@ -273,182 +337,122 @@
             border: 2px solid #bdc3c7;
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:active {
             background: #dfe6e9;
             border-color: #3498db;
         }
 
-        /* ПРАВАЯ ПАНЕЛЬ - РЕЗУЛЬТАТ */
-        .result-panel {
-            background: white;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ОТОБРАЖЕНИЕ ПАРОЛЯ */
+        /* АДАПТИВНОЕ ОТОБРАЖЕНИЕ ПАРОЛЯ */
         .password-display-container {
             background: linear-gradient(135deg, #f8f9fa, #ecf0f1);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
             border: 2px solid #e8eaed;
-            position: relative;
         }
 
         .password-display {
             font-family: 'Courier New', 'Consolas', monospace;
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: bold;
             color: #2c3e50;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             word-break: break-all;
-            min-height: 60px;
-            padding: 10px;
+            min-height: 50px;
+            padding: 12px;
             background: white;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 2px dashed #bdc3c7;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 480px) {
+            .password-display {
+                font-size: 1.4rem;
+                padding: 10px;
+            }
         }
 
         .password-actions {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 8px;
+            margin-top: 16px;
+            flex-wrap: wrap;
         }
 
         .icon-btn {
             flex: 1;
-            padding: 15px;
+            min-width: calc(50% - 4px);
+            padding: 14px;
             background: white;
             border: 2px solid #e8eaed;
-            border-radius: 10px;
-            font-size: 1.2rem;
+            border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .icon-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .icon-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        .copy-btn:hover {
-            background: #d5f4e6;
-            border-color: #2ecc71;
-            color: #27ae60;
-        }
-
-        .refresh-btn:hover {
-            background: #e3f2fd;
-            border-color: #3498db;
-            color: #2980b9;
-        }
-
-        /* ИНДИКАТОР НАДЁЖНОСТИ */
-        .strength-indicator {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            border: 2px solid #e8eaed;
-        }
-
-        .strength-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .strength-title {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-
-        .strength-value {
-            font-size: 1.2rem;
-            font-weight: bold;
-            padding: 5px 15px;
-            border-radius: 20px;
-            text-align: center;
-        }
-
-        .strength-bar {
-            height: 12px;
-            background: #ecf0f1;
-            border-radius: 6px;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-
-        .strength-fill {
-            height: 100%;
-            width: 0%;
-            border-radius: 6px;
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .hack-time {
-            text-align: center;
-            font-size: 0.95rem;
-            color: #7f8c8d;
-            margin-top: 10px;
-            padding: 10px;
-            background: #ecf0f1;
-            border-radius: 8px;
-        }
-
-        /* СТАТИСТИКА */
+        /* АДАПТИВНАЯ СТАТИСТИКА */
         .stats-panel {
             background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
             border: 2px solid #e8eaed;
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        @media (min-width: 480px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .stat-item {
             background: white;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             text-align: center;
             border: 1px solid #e8eaed;
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: bold;
             color: #3498db;
             font-family: 'Consolas', monospace;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #7f8c8d;
         }
 
-        /* ИСТОРИЯ */
+        /* АДАПТИВНАЯ ИСТОРИЯ */
         .history-panel {
             background: #f8f9fa;
-            border-radius: 15px;
-            padding: 25px;
-            flex-grow: 1;
+            border-radius: 12px;
+            padding: 20px;
             border: 2px solid #e8eaed;
             display: flex;
             flex-direction: column;
@@ -457,12 +461,13 @@
         .history-list {
             flex-grow: 1;
             overflow-y: auto;
-            max-height: 200px;
+            max-height: 150px;
             background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0;
             border: 1px solid #e8eaed;
+            -webkit-overflow-scrolling: touch;
         }
 
         .history-item {
@@ -472,6 +477,7 @@
             padding: 10px;
             border-bottom: 1px solid #eee;
             font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
         }
 
         .history-item:last-child {
@@ -481,57 +487,43 @@
         .history-password {
             font-weight: 600;
             color: #2c3e50;
+            word-break: break-all;
+            margin-right: 10px;
         }
 
-        .history-copy {
-            background: none;
-            border: none;
-            color: #3498db;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-
-        .history-copy:hover {
-            background: #e3f2fd;
-        }
-
-        .history-empty {
-            text-align: center;
-            color: #95a5a6;
-            padding: 20px;
-            font-style: italic;
-        }
-
-        /* ПОДВАЛ */
+        /* АДАПТИВНЫЙ ПОДВАЛ */
         footer {
             background: #2c3e50;
             color: white;
-            padding: 30px 40px;
+            padding: 20px;
         }
 
         .footer-content {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 40px;
-            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-width: 100%;
             margin: 0 auto;
         }
 
-        @media (max-width: 768px) {
+        @media (min-width: 768px) {
             .footer-content {
-                grid-template-columns: 1fr;
+                flex-direction: row;
+                gap: 40px;
             }
         }
 
-        .tips h3 {
+        .tips, .project-info {
+            flex: 1;
+        }
+
+        .tips h3, .project-info h3 {
             color: #3498db;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .tips ul {
@@ -540,9 +532,11 @@
         }
 
         .tips li {
-            margin-bottom: 10px;
-            padding-left: 25px;
+            margin-bottom: 8px;
+            padding-left: 22px;
             position: relative;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
 
         .tips li:before {
@@ -553,60 +547,110 @@
             font-weight: bold;
         }
 
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 20px;
-            color: #bdc3c7;
-            font-size: 0.9rem;
-        }
-
         .project-info {
             background: rgba(255,255,255,0.1);
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 0.85rem;
+            line-height: 1.5;
         }
 
-        /* УВЕДОМЛЕНИЕ */
+        .copyright {
+            text-align: center;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 20px;
+            color: #bdc3c7;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* АДАПТИВНОЕ УВЕДОМЛЕНИЕ */
         .notification {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
             background: #27ae60;
             color: white;
-            padding: 20px 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
-            gap: 15px;
-            transform: translateX(150%);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            gap: 12px;
+            transition: transform 0.3s ease;
             z-index: 1000;
+            max-width: 90%;
+            text-align: center;
         }
 
         .notification.show {
-            transform: translateX(0);
+            transform: translateX(-50%) translateY(0);
         }
 
-        /* ЦВЕТА ДЛЯ СИЛЫ ПАРОЛЯ */
-        .strength-weak { color: #e74c3c; background: #e74c3c; }
-        .strength-medium { color: #f39c12; background: #f39c12; }
-        .strength-strong { color: #27ae60; background: #27ae60; }
-        .strength-very-strong { color: #2ecc71; background: #2ecc71; }
-        .strength-excellent { color: #3498db; background: #3498db; }
+        /* ОПТИМИЗАЦИЯ ДЛЯ ВЕРТИКАЛЬНОГО СКРОЛЛА */
+        @media (max-height: 700px) {
+            .container {
+                margin: 20px 0;
+            }
+            
+            .history-list {
+                max-height: 100px;
+            }
+        }
 
-        .bg-weak { background: #e74c3c; }
-        .bg-medium { background: #f39c12; }
-        .bg-strong { background: #27ae60; }
-        .bg-very-strong { background: #2ecc71; }
-        .bg-excellent { background: #3498db; }
+        /* КРУПНЫЕ ЭЛЕМЕНТЫ ДЛЯ КАСАНИЙ */
+        @media (max-width: 768px) {
+            button, 
+            .checkbox-item,
+            .icon-btn,
+            input[type="checkbox"] {
+                min-height: 44px; /* Минимальный размер для касания */
+            }
+            
+            input[type="range"]::-webkit-slider-thumb {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        /* ПРЕДУПРЕЖДЕНИЕ О ВЕРТИКАЛЬНОЙ ОРИЕНТАЦИИ */
+        .orientation-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #2c3e50;
+            color: white;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        @media (max-width: 768px) and (orientation: landscape) and (max-height: 500px) {
+            .orientation-warning {
+                display: flex;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- ПРЕДУПРЕЖДЕНИЕ О ВЕРТИКАЛЬНОЙ ОРИЕНТАЦИИ -->
+    <div class="orientation-warning">
+        <div>
+            <div style="font-size: 3rem; margin-bottom: 20px;">📱</div>
+            <h2 style="margin-bottom: 15px;">Поверните телефон вертикально</h2>
+            <p>Для лучшего отображения генератора паролей используйте портретный режим</p>
+        </div>
+    </div>
+
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
     <div class="container">
         <!-- ШАПКА -->
         <header>
@@ -713,7 +757,7 @@
                 <!-- ИНДИКАТОР НАДЁЖНОСТИ -->
                 <div class="strength-indicator">
                     <div class="strength-header">
-                        <span class="strength-title">Надёжность пароля:</span>
+                        <span class="strength-title">Надёжность:</span>
                         <div class="strength-value" id="strength-text">—</div>
                     </div>
                     <div class="strength-bar">
@@ -775,10 +819,10 @@
                     <h3><i class="fas fa-lightbulb"></i> Советы по созданию безопасных паролей:</h3>
                     <ul>
                         <li>Используйте пароли длиной не менее 12 символов</li>
-                        <li>Комбинируйте разные типы символов (буквы, цифры, спецсимволы)</li>
-                        <li>Не используйте личную информацию (имена, даты рождения)</li>
+                        <li>Комбинируйте разные типы символов</li>
+                        <li>Не используйте личную информацию</li>
                         <li>Используйте уникальные пароли для разных сервисов</li>
-                        <li>Регулярно меняйте пароли (раз в 3-6 месяцев)</li>
+                        <li>Регулярно меняйте пароли</li>
                         <li>Используйте менеджер паролей для хранения</li>
                     </ul>
                 </div>
@@ -797,8 +841,8 @@
 
     <!-- УВЕДОМЛЕНИЕ -->
     <div class="notification" id="notification">
-        <i class="fas fa-check-circle" style="font-size: 1.5rem;"></i>
-        <span>Пароль скопирован в буфер обмена!</span>
+        <i class="fas fa-check-circle" style="font-size: 1.3rem;"></i>
+        <span>Пароль скопирован!</span>
     </div>
 
     <script>
@@ -851,24 +895,19 @@
             symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
         };
 
-        // Похожие символы для исключения
-        const similarChars = 'l1I0Oo';
-
-        // Слова для парольных фраз (русские + английские)
+        // Слова для парольных фраз
         const words = {
             russian: [
                 'кошка', 'дом', 'солнце', 'книга', 'вода', 'небо', 'огонь', 'земля',
-                'ветер', 'море', 'лес', 'город', 'друг', 'школа', 'работа', 'семья',
-                'счастье', 'время', 'жизнь', 'мир', 'любовь', 'мечта', 'сила', 'путь'
+                'ветер', 'море', 'лес', 'город', 'друг', 'школа', 'работа', 'семья'
             ],
             english: [
                 'cat', 'house', 'sun', 'book', 'water', 'sky', 'fire', 'earth',
-                'wind', 'sea', 'forest', 'city', 'friend', 'school', 'work', 'family',
-                'happiness', 'time', 'life', 'world', 'love', 'dream', 'power', 'way'
+                'wind', 'sea', 'forest', 'city', 'friend', 'school', 'work', 'family'
             ]
         };
 
-        // История паролей (из localStorage)
+        // История паролей
         let passwordHistory = JSON.parse(localStorage.getItem('passwordHistory')) || [];
 
         // =================== ФУНКЦИИ ===================
@@ -879,18 +918,53 @@
             generatePassword();
             loadHistory();
             setupEventListeners();
+            
+            // Добавляем обработчик для мобильной клавиатуры
+            setupMobileOptimizations();
+        }
+
+        // Оптимизации для мобильных
+        function setupMobileOptimizations() {
+            // Предотвращаем увеличение текста при фокусе на iOS
+            document.addEventListener('touchstart', function() {}, {passive: true});
+            
+            // Улучшаем работу касаний
+            document.addEventListener('touchmove', function(e) {
+                if (e.target.type === 'range') {
+                    e.preventDefault();
+                }
+            }, {passive: false});
+            
+            // Закрываем уведомление при тапе
+            elements.notification.addEventListener('touchstart', hideNotification);
+        }
+
+        function hideNotification() {
+            elements.notification.classList.remove('show');
         }
 
         // Настройка обработчиков событий
         function setupEventListeners() {
             // Слайдер длины
             elements.lengthSlider.addEventListener('input', updateSlider);
+            elements.lengthSlider.addEventListener('touchmove', updateSlider);
             
             // Кнопки генерации
             elements.generateBtn.addEventListener('click', generatePassword);
             elements.generatePin.addEventListener('click', generatePin);
             elements.generatePassphrase.addEventListener('click', generatePassphrase);
             elements.refreshBtn.addEventListener('click', generatePassword);
+            
+            // Добавляем обработчики касаний для мобильных
+            ['generate-btn', 'generate-pin', 'generate-passphrase', 'copy-btn', 'refresh-btn', 'clear-history']
+                .forEach(id => {
+                    document.getElementById(id).addEventListener('touchstart', function(e) {
+                        this.classList.add('active');
+                    });
+                    document.getElementById(id).addEventListener('touchend', function(e) {
+                        this.classList.remove('active');
+                    });
+                });
             
             // Кнопки управления
             elements.copyBtn.addEventListener('click', copyPassword);
@@ -964,7 +1038,6 @@
                         const randomIndex = randomValues[i] % charset.length;
                         char = charset[randomIndex];
                         attempts++;
-                        // Если слишком много попыток, разрешаем повтор
                         if (attempts > 10) break;
                     } while (char === lastChar);
                     
@@ -994,7 +1067,7 @@
             window.crypto.getRandomValues(randomValues);
             
             for (let i = 0; i < pinLength; i++) {
-                pin += randomValues[i] % 10; // Только цифры 0-9
+                pin += randomValues[i] % 10;
             }
             
             displayPassword(pin);
@@ -1012,7 +1085,6 @@
             const randomValues = new Uint32Array(wordCount);
             window.crypto.getRandomValues(randomValues);
             
-            // Выбираем случайные слова
             for (let i = 0; i < wordCount; i++) {
                 const lang = Math.random() > 0.5 ? 'russian' : 'english';
                 const wordList = words[lang];
@@ -1022,7 +1094,6 @@
                 phrase += wordList[randomIndex];
             }
             
-            // Добавляем цифру и спецсимвол для надёжности
             const specialChars = '!@#$%^&*';
             const randomSpecial = specialChars[Math.floor(Math.random() * specialChars.length)];
             const randomNumber = Math.floor(Math.random() * 10);
@@ -1042,10 +1113,8 @@
 
         // Обновление статистики
         function updateStatistics(password) {
-            // Подсчёт символов
             elements.charCount.textContent = password.length;
             
-            // Подсчёт типов символов
             const uppercaseCount = (password.match(/[A-Z]/g) || []).length;
             const lowercaseCount = (password.match(/[a-z]/g) || []).length;
             const numbersCount = (password.match(/[0-9]/g) || []).length;
@@ -1056,7 +1125,6 @@
             elements.numbersCount.textContent = numbersCount;
             elements.symbolsCount.textContent = symbolsCount;
             
-            // Расчёт энтропии (бит)
             const charsetSize = calculateCharsetSize(password);
             const entropy = Math.log2(Math.pow(charsetSize, password.length));
             elements.entropyValue.textContent = entropy.toFixed(1);
@@ -1077,25 +1145,21 @@
             let score = 0;
             const length = password.length;
             
-            // Баллы за длину
             if (length >= 8) score += 10;
             if (length >= 12) score += 20;
             if (length >= 16) score += 30;
             if (length >= 20) score += 40;
             
-            // Баллы за разнообразие
             if (/[A-Z]/.test(password)) score += 20;
             if (/[a-z]/.test(password)) score += 20;
             if (/[0-9]/.test(password)) score += 20;
             if (/[^A-Za-z0-9]/.test(password)) score += 30;
             
-            // Штраф за повторения (если опция включена)
             if (elements.avoidRepetition.checked) {
                 const repeats = (password.match(/(.)\1/g) || []).length;
                 score -= repeats * 15;
             }
             
-            // Определение уровня надёжности
             let strength, colorClass, bgClass, percent;
             if (score >= 120) {
                 strength = 'ОТЛИЧНО 🔒';
@@ -1124,13 +1188,11 @@
                 percent = 25;
             }
             
-            // Обновление интерфейса
             elements.strengthText.textContent = strength;
             elements.strengthText.className = 'strength-value ' + colorClass;
             elements.strengthFill.style.width = percent + '%';
             elements.strengthFill.className = 'strength-fill ' + bgClass;
             
-            // Расчёт времени взлома
             updateHackTime(password);
         }
 
@@ -1140,31 +1202,29 @@
             const length = password.length;
             const combinations = Math.pow(charsetSize, length);
             
-            // Скорость взлома (попыток в секунду)
-            const guessesPerSecond = 1e9; // 1 миллиард
-            
+            const guessesPerSecond = 1e9;
             let seconds = combinations / guessesPerSecond;
             let timeText;
             
             if (seconds < 1) {
                 timeText = 'менее секунды';
             } else if (seconds < 60) {
-                timeText = Math.round(seconds) + ' секунд';
+                timeText = Math.round(seconds) + ' сек';
             } else if (seconds < 3600) {
                 const minutes = Math.round(seconds / 60);
-                timeText = minutes + ' минут';
+                timeText = minutes + ' мин';
             } else if (seconds < 86400) {
                 const hours = Math.round(seconds / 3600);
-                timeText = hours + ' часов';
+                timeText = hours + ' час';
             } else if (seconds < 31536000) {
                 const days = Math.round(seconds / 86400);
-                timeText = days + ' дней';
+                timeText = days + ' дн';
             } else {
                 const years = Math.round(seconds / 31536000);
                 timeText = years + ' лет';
             }
             
-            elements.hackTime.textContent = `⏱️ Взлом за: ~${timeText} (при ${guessesPerSecond.toLocaleString()} попыток/сек)`;
+            elements.hackTime.textContent = `⏱️ Взлом за: ~${timeText}`;
         }
 
         // Копирование пароля
@@ -1180,7 +1240,6 @@
                     showNotification();
                 })
                 .catch(err => {
-                    // Запасной вариант
                     const textArea = document.createElement('textarea');
                     textArea.value = password;
                     document.body.appendChild(textArea);
@@ -1196,18 +1255,18 @@
             elements.notification.classList.add('show');
             setTimeout(() => {
                 elements.notification.classList.remove('show');
-            }, 2000);
+            }, 1500);
         }
 
         // Работа с историей
         function addToHistory(password) {
             if (passwordHistory.length >= 10) {
-                passwordHistory.shift(); // Удаляем самый старый
+                passwordHistory.shift();
             }
             
             passwordHistory.push({
                 password: password,
-                time: new Date().toLocaleTimeString()
+                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             });
             
             localStorage.setItem('passwordHistory', JSON.stringify(passwordHistory));
@@ -1222,16 +1281,15 @@
                 return;
             }
             
-            // Отображаем в обратном порядке (свежие сверху)
             [...passwordHistory].reverse().forEach((item, index) => {
                 const historyItem = document.createElement('div');
                 historyItem.className = 'history-item';
                 historyItem.innerHTML = `
-                    <div>
-                        <span class="history-password">${item.password}</span>
-                        <div style="font-size: 0.8rem; color: #95a5a6;">${item.time}</div>
+                    <div style="flex: 1; min-width: 0;">
+                        <div class="history-password">${item.password}</div>
+                        <div style="font-size: 0.75rem; color: #95a5a6; margin-top: 4px;">${item.time}</div>
                     </div>
-                    <button class="history-copy" onclick="copyFromHistory('${item.password.replace(/'/g, "\\'")}')">
+                    <button class="history-copy" onclick="copyFromHistory('${item.password.replace(/'/g, "\\'")}')" style="flex-shrink: 0; padding: 8px;">
                         <i class="far fa-copy"></i>
                     </button>
                 `;

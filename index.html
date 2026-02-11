@@ -1064,52 +1064,91 @@
         }
         
         // =============== ОЦЕНКА НАДЁЖНОСТИ ===============
-        function updateStrength(password) {
-            let score = 0;
-            const length = password.length;
-            
-            score += length * 3;
-            
-            if (/[A-Z]/.test(password)) score += 20;
-            if (/[a-z]/.test(password)) score += 20;
-            if (/[0-9]/.test(password)) score += 20;
-            if (/[^A-Za-z0-9]/.test(password)) score += 30;
-            
-            if (avoidRepetition.checked) {
-                const repeats = (password.match(/(.)\1/g) || []).length;
-                score -= repeats * 15;
-            }
-            
-            let strength, level, percent, time;
-            
-            if (score >= 100) {
-                strength = 'ОТЛИЧНО 🔒';
-                level = 'strength-excellent';
-                percent = 100;
-                time = 'тысячи лет';
-            } else if (score >= 70) {
-                strength = 'СИЛЬНЫЙ 👍';
-                level = 'strength-strong';
-                percent = 75;
-                time = 'годы';
-            } else if (score >= 40) {
-                strength = 'СРЕДНИЙ ⚠️';
-                level = 'strength-medium';
-                percent = 50;
-                time = 'часы/дни';
-            } else {
-                strength = 'СЛАБЫЙ ❌';
-                level = 'strength-weak';
-                percent = 25;
-                time = 'быстро';
-            }
-            
-            strengthText.textContent = strength;
-            strengthText.className = 'strength-value ' + level;
-            strengthFill.style.width = percent + '%';
-            strengthFill.className = 'strength-fill bg-' + level.split('-')[1];
-            hackTime.textContent = `⏱️ Взлом за: ${time}`;
-        }
+function updateStrength(password) {
+    let score = 0;
+    const length = password.length;
+    
+    score += length * 3;
+    
+    if (/[A-Z]/.test(password)) score += 20;
+    if (/[a-z]/.test(password)) score += 20;
+    if (/[0-9]/.test(password)) score += 20;
+    if (/[^A-Za-z0-9]/.test(password)) score += 30;
+    
+    if (avoidRepetition.checked) {
+        const repeats = (password.match(/(.)\1/g) || []).length;
+        score -= repeats * 15;
+    }
+    
+    // ========== ТОЧНЫЙ РАСЧЁТ ВРЕМЕНИ ВЗЛОМА ==========
+    // 1. Определяем размер алфавита
+    let charsetSize = 0;
+    if (/[A-Z]/.test(password)) charsetSize += 26;
+    if (/[a-z]/.test(password)) charsetSize += 26;
+    if (/[0-9]/.test(password)) charsetSize += 10;
+    if (/[^A-Za-z0-9]/.test(password)) charsetSize += 32;
+    if (charsetSize === 0) charsetSize = 1;
+    
+    // 2. Количество комбинаций
+    const combinations = Math.pow(charsetSize, length);
+    
+    // 3. Скорость взлома: 1 миллиард в секунду
+    const guessesPerSecond = 1000000000;
+    let seconds = combinations / guessesPerSecond;
+    
+    // 4. Переводим в годы
+    const secondsInYear = 60 * 60 * 24 * 365;
+    const years = seconds / secondsInYear;
+    
+    // 5. Формируем текст времени взлома
+    let timeText;
+    if (years < 0.001) {
+        timeText = 'менее секунды';
+    } else if (years < 0.0167) { // меньше 1 дня
+        const hours = Math.round(seconds / 3600);
+        timeText = hours + ' часов';
+    } else if (years < 1) {
+        const days = Math.round(seconds / 86400);
+        timeText = days + ' дней';
+    } else if (years < 100) {
+        timeText = Math.round(years) + ' лет';
+    } else if (years < 1000) {
+        timeText = Math.round(years / 10) * 10 + ' лет';
+    } else if (years < 10000) {
+        timeText = Math.round(years / 100) * 100 + ' лет';
+    } else if (years < 1000000) {
+        timeText = Math.round(years / 1000) * 1000 + ' лет';
+    } else {
+        timeText = 'более 1 миллиона лет';
+    }
+    
+    // ========== ОЦЕНКА НАДЁЖНОСТИ ==========
+    let strength, level, percent;
+    
+    if (score >= 100) {
+        strength = 'ОТЛИЧНО 🔒';
+        level = 'strength-excellent';
+        percent = 100;
+    } else if (score >= 70) {
+        strength = 'СИЛЬНЫЙ 👍';
+        level = 'strength-strong';
+        percent = 75;
+    } else if (score >= 40) {
+        strength = 'СРЕДНИЙ ⚠️';
+        level = 'strength-medium';
+        percent = 50;
+    } else {
+        strength = 'СЛАБЫЙ ❌';
+        level = 'strength-weak';
+        percent = 25;
+    }
+    
+    strengthText.textContent = strength;
+    strengthText.className = 'strength-value ' + level;
+    strengthFill.style.width = percent + '%';
+    strengthFill.className = 'strength-fill bg-' + level.split('-')[1];
+    hackTime.textContent = `⏱️ Взлом за: ${timeText}`;
+}
         
         // =============== КОПИРОВАНИЕ ===============
         function copyPassword() {

@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>🔐 SecurePass - Генератор безопасных паролей</title>
     <style>
         /* СБРОС СТИЛЕЙ */
@@ -17,7 +17,7 @@
             background: linear-gradient(135deg, #1a237e 0%, #4a148c 100%);
             color: #333;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -28,33 +28,16 @@
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             overflow: hidden;
-            animation: fadeIn 0.8s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ШАПКА */
         header {
             background: linear-gradient(90deg, #2c3e50, #34495e);
             color: white;
-            padding: 25px 40px;
+            padding: 20px 30px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        header::before {
-            content: "🔐🔒🔑";
-            position: absolute;
-            font-size: 60px;
-            opacity: 0.1;
-            top: 10px;
-            right: 20px;
         }
 
         .logo {
@@ -62,50 +45,36 @@
             align-items: center;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
         }
 
         .logo-icon {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             color: #3498db;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
         }
 
         h1 {
-            font-size: 2.4rem;
+            font-size: 2rem;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
-            margin-top: 5px;
         }
 
-        /* ОСНОВНОЙ КОНТЕНТ */
+        /* ОСНОВНОЙ КОНТЕНТ - ДВЕ КОЛОНКИ */
         .app-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0;
-            min-height: 600px;
-        }
-
-        @media (max-width: 900px) {
-            .app-container {
-                grid-template-columns: 1fr;
-            }
         }
 
         /* ЛЕВАЯ ПАНЕЛЬ - НАСТРОЙКИ */
         .settings-panel {
             background: #f8fafc;
-            padding: 30px;
+            padding: 25px;
             border-right: 2px solid #e8eaed;
             display: flex;
             flex-direction: column;
@@ -113,24 +82,20 @@
 
         .panel-title {
             color: #2c3e50;
-            font-size: 1.5rem;
-            margin-bottom: 25px;
+            font-size: 1.4rem;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .panel-title i {
-            color: #3498db;
-        }
-
         /* СЛАЙДЕР ДЛИНЫ */
         .slider-container {
             background: white;
-            padding: 20px;
+            padding: 18px;
             border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
             border: 1px solid #e8eaed;
         }
 
@@ -138,129 +103,63 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .length-value {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #3498db;
             background: #ebf5fb;
-            padding: 5px 15px;
-            border-radius: 10px;
-            min-width: 60px;
-            text-align: center;
+            padding: 4px 12px;
+            border-radius: 8px;
         }
 
         input[type="range"] {
             width: 100%;
-            height: 12px;
+            height: 10px;
             -webkit-appearance: none;
             background: linear-gradient(90deg, #3498db, #2ecc71);
-            border-radius: 10px;
+            border-radius: 8px;
             outline: none;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             background: white;
             border: 3px solid #3498db;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.5);
+            box-shadow: 0 2px 8px rgba(52, 152, 219, 0.4);
         }
 
         .slider-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 8px;
             color: #7f8c8d;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         /* ЧЕКБОКСЫ */
         .checkbox-section {
             background: white;
-            padding: 20px;
+            padding: 18px;
             border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            border: 1px solid #e8eaed;
         }
 
         .checkbox-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 12px;
         }
 
         .checkbox-item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border: 2px solid #e8eaed;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .checkbox-item:hover {
-            border-color: #3498db;
-            transform: translateY(-2px);
-        }
-
-        .checkbox-item input {
-            width: 20px;
-            height: 20px;
-            margin-right: 15px;
-            cursor: pointer;
-        }
-
-        .checkbox-label {
-            flex-grow: 1;
-            font-weight: 500;
-            color: #2c3e50;
-        }
-
-        .char-example {
-            font-family: 'Consolas', monospace;
-            font-size: 0.9rem;
-            color: #7f8c8d;
-            background: #ecf0f1;
-            padding: 3px 8px;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-
-        /* ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ - ВЕРНУЛ! */
-        .options-section {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid #e8eaed;
-        }
-
-        .options-title {
-            color: #2c3e50;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .option-item {
             display: flex;
             align-items: center;
             padding: 12px;
@@ -270,59 +169,117 @@
             cursor: pointer;
         }
 
-        .option-item:hover {
-            background: #e3f2fd;
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+        }
+
+        .checkbox-label {
+            flex-grow: 1;
+            font-weight: 500;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+        .char-example {
+            font-family: 'Consolas', monospace;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            background: #ecf0f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        @media (min-width: 1000px) {
+            .char-example {
+                display: inline-block;
+            }
+        }
+
+        /* ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ */
+        .options-section {
+            background: white;
+            padding: 18px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            border: 1px solid #e8eaed;
+        }
+
+        .options-title {
+            color: #2c3e50;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e8eaed;
+            cursor: pointer;
         }
 
         .option-item input {
             width: 18px;
             height: 18px;
             margin-right: 12px;
-            cursor: pointer;
         }
 
         .option-label {
             flex-grow: 1;
             color: #2c3e50;
+            font-size: 0.95rem;
         }
 
         .option-hint {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #7f8c8d;
             font-style: italic;
         }
 
-        /* КНОПКИ ГЕНЕРАЦИИ */
+        /* КНОПКИ */
         .generate-buttons {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
+            gap: 12px;
             margin-top: auto;
         }
 
         .btn {
-            padding: 18px;
+            padding: 16px;
             border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
+            border-radius: 10px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
+            transition: all 0.2s;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            box-shadow: 0 5px 20px rgba(52, 152, 219, 0.3);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.25);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        .btn-primary:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.35);
         }
 
         .btn-secondary {
@@ -331,40 +288,37 @@
             border: 2px solid #bdc3c7;
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:active {
             background: #dfe6e9;
             border-color: #3498db;
         }
 
-        /* ПРАВАЯ ПАНЕЛЬ - РЕЗУЛЬТАТ */
+        /* ПРАВАЯ ПАНЕЛЬ - РЕЗУЛЬТАТ (БЕЗ ПРОКРУТКИ!) */
         .result-panel {
             background: white;
-            padding: 30px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            max-height: 800px;
+            gap: 20px;
+            height: 100%;
         }
 
-        /* ОТОБРАЖЕНИЕ ПАРОЛЯ */
+        /* ПАРОЛЬ */
         .password-display-container {
             background: linear-gradient(135deg, #f8f9fa, #ecf0f1);
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 20px;
             border: 2px solid #e8eaed;
-            position: relative;
         }
 
         .password-display {
-            font-family: 'Courier New', 'Consolas', monospace;
-            font-size: 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #2c3e50;
-            letter-spacing: 1px;
             word-break: break-all;
-            min-height: 60px;
-            padding: 10px;
+            min-height: 70px;
+            padding: 12px;
             background: white;
             border-radius: 10px;
             border: 2px dashed #bdc3c7;
@@ -372,52 +326,49 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            margin-bottom: 15px;
         }
 
         .password-actions {
             display: flex;
             gap: 10px;
-            margin-top: 20px;
         }
 
         .icon-btn {
             flex: 1;
-            padding: 15px;
+            padding: 14px;
             background: white;
             border: 2px solid #e8eaed;
-            border-radius: 10px;
-            font-size: 1.2rem;
+            border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
+            transition: all 0.2s;
         }
 
-        .icon-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .icon-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
 
-        .copy-btn:hover {
-            background: #d5f4e6;
-            border-color: #2ecc71;
-            color: #27ae60;
+        .copy-btn:active {
+            background: #d4edda;
+            border-color: #28a745;
         }
 
-        .refresh-btn:hover {
-            background: #e3f2fd;
-            border-color: #3498db;
-            color: #2980b9;
+        .refresh-btn:active {
+            background: #d1ecf1;
+            border-color: #17a2b8;
         }
 
-        /* ИНДИКАТОР НАДЁЖНОСТИ */
+        /* НАДЁЖНОСТЬ */
         .strength-indicator {
             background: #f8f9fa;
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 20px;
             border: 2px solid #e8eaed;
         }
 
@@ -425,7 +376,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .strength-title {
@@ -434,121 +385,113 @@
         }
 
         .strength-value {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            padding: 5px 15px;
+            padding: 4px 15px;
             border-radius: 20px;
             text-align: center;
         }
 
         .strength-bar {
-            height: 12px;
+            height: 10px;
             background: #ecf0f1;
-            border-radius: 6px;
+            border-radius: 5px;
             overflow: hidden;
-            margin: 15px 0;
+            margin: 12px 0;
         }
 
         .strength-fill {
             height: 100%;
             width: 0%;
-            border-radius: 6px;
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: 5px;
+            transition: width 0.5s ease;
         }
 
         .hack-time {
             text-align: center;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #7f8c8d;
-            margin-top: 10px;
-            padding: 10px;
+            padding: 8px;
             background: #ecf0f1;
-            border-radius: 8px;
+            border-radius: 6px;
         }
 
-        /* ЦВЕТА ДЛЯ ОЦЕНОК */
-        .strength-weak { color: #e74c3c; background: #e74c3c; }
-        .strength-medium { color: #f39c12; background: #f39c12; }
-        .strength-strong { color: #27ae60; background: #27ae60; }
-        .strength-very-strong { color: #2ecc71; background: #2ecc71; }
-        .strength-excellent { color: #3498db; background: #3498db; }
+        /* ЦВЕТА */
+        .strength-weak { color: #e74c3c; background: #e74c3c; color: white; }
+        .strength-medium { color: #f39c12; background: #f39c12; color: white; }
+        .strength-strong { color: #27ae60; background: #27ae60; color: white; }
+        .strength-excellent { color: #3498db; background: #3498db; color: white; }
 
         .bg-weak { background: #e74c3c; }
         .bg-medium { background: #f39c12; }
         .bg-strong { background: #27ae60; }
-        .bg-very-strong { background: #2ecc71; }
         .bg-excellent { background: #3498db; }
 
         /* СТАТИСТИКА */
         .stats-panel {
             background: #f8f9fa;
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 20px;
             border: 2px solid #e8eaed;
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 12px;
         }
 
         .stat-item {
             background: white;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
             text-align: center;
             border: 1px solid #e8eaed;
         }
 
         .stat-value {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: bold;
             color: #3498db;
-            font-family: 'Consolas', monospace;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #7f8c8d;
         }
 
-        /* ИСТОРИЯ */
+        /* ИСТОРИЯ - БЕЗ ПРОКРУТКИ, ВСТАВЛЕНА НИЖЕ */
         .history-panel {
             background: #f8f9fa;
             border-radius: 15px;
-            padding: 25px;
+            padding: 20px;
             border: 2px solid #e8eaed;
-            display: flex;
-            flex-direction: column;
         }
 
         .history-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .history-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #2c3e50;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .history-list {
-            flex-grow: 1;
+            max-height: 140px;
             overflow-y: auto;
-            max-height: 180px;
             background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0;
             border: 1px solid #e8eaed;
         }
 
@@ -556,14 +499,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 10px;
             border-bottom: 1px solid #eee;
-            font-family: 'Consolas', monospace;
-            transition: background 0.2s;
-        }
-
-        .history-item:hover {
-            background: #f8f9fa;
         }
 
         .history-item:last-child {
@@ -571,6 +508,7 @@
         }
 
         .history-password {
+            font-family: 'Courier New', monospace;
             font-weight: 600;
             color: #2c3e50;
             word-break: break-all;
@@ -578,9 +516,9 @@
         }
 
         .history-time {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #95a5a6;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .history-copy {
@@ -588,82 +526,173 @@
             border: none;
             color: #3498db;
             cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 5px;
-            transition: all 0.2s;
+            padding: 6px 10px;
+            border-radius: 4px;
         }
 
-        .history-copy:hover {
+        .history-copy:active {
             background: #e3f2fd;
-            transform: scale(1.1);
         }
 
         .history-empty {
             text-align: center;
             color: #95a5a6;
-            padding: 20px;
+            padding: 15px;
             font-style: italic;
-        }
-
-        .history-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 5px;
         }
 
         /* ПОДВАЛ */
         footer {
             background: #2c3e50;
             color: white;
-            padding: 30px 40px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 20px 25px;
             text-align: center;
         }
 
         .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 20px;
             color: #bdc3c7;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+        }
+
+        .copyright p {
+            margin: 5px 0;
         }
 
         /* УВЕДОМЛЕНИЕ */
         .notification {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
             background: #27ae60;
             color: white;
-            padding: 20px 30px;
-            border-radius: 12px;
+            padding: 15px 20px;
+            border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
-            gap: 15px;
-            transform: translateX(150%);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            justify-content: center;
+            gap: 12px;
+            transform: translateY(150%);
+            transition: transform 0.4s ease;
             z-index: 1000;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         .notification.show {
-            transform: translateX(0);
+            transform: translateY(0);
         }
 
-        @media (max-width: 768px) {
-            .notification {
-                bottom: 20px;
-                right: 20px;
-                left: 20px;
-                transform: translateY(150%);
+        /* =============== АДАПТАЦИЯ ПОД ТЕЛЕФОН =============== */
+        @media (max-width: 900px) {
+            .app-container {
+                grid-template-columns: 1fr;
             }
-            .notification.show {
-                transform: translateY(0);
+            
+            .settings-panel {
+                border-right: none;
+                border-bottom: 2px solid #e8eaed;
+            }
+            
+            .char-example {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo-icon {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 18px 15px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .subtitle {
+                font-size: 0.9rem;
+            }
+            
+            .settings-panel, .result-panel {
+                padding: 18px;
+            }
+            
+            .panel-title {
+                font-size: 1.3rem;
+                margin-bottom: 15px;
+            }
+            
+            .password-display {
+                font-size: 1.5rem;
+                min-height: 60px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stat-value {
+                font-size: 1.4rem;
+            }
+            
+            .btn, .icon-btn {
+                padding: 14px;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            header {
+                padding: 15px 12px;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .logo-icon {
+                font-size: 2rem;
+            }
+            
+            .password-display {
+                font-size: 1.3rem;
+                padding: 10px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn, .icon-btn {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+            
+            .option-hint {
+                display: none;
+            }
+        }
+
+        /* ДЛЯ ПЛАНШЕТОВ */
+        @media (min-width: 901px) and (max-width: 1100px) {
+            .char-example {
+                display: none;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -677,40 +706,41 @@
                 <div class="logo-icon">🔐</div>
                 <h1>SecurePass Generator</h1>
             </div>
-            <p class="subtitle">Создание криптографически стойких паролей за считанные секунды</p>
+            <p class="subtitle">Криптографически стойкие пароли за секунды</p>
         </header>
 
-        <!-- ОСНОВНОЕ СОДЕРЖИМОЕ -->
+        <!-- ДВЕ КОЛОНКИ -->
         <div class="app-container">
-            <!-- ЛЕВАЯ ПАНЕЛЬ - НАСТРОЙКИ -->
+            <!-- ЛЕВАЯ - НАСТРОЙКИ -->
             <div class="settings-panel">
-                <h2 class="panel-title"><i class="fas fa-sliders-h"></i> Настройки пароля</h2>
+                <h2 class="panel-title"><i class="fas fa-sliders-h"></i> Настройки</h2>
                 
-                <!-- СЛАЙДЕР ДЛИНЫ -->
+                <!-- ДЛИНА -->
                 <div class="slider-container">
                     <div class="slider-header">
-                        <span style="font-weight: 500;">Длина пароля:</span>
+                        <span>Длина пароля:</span>
                         <div class="length-value" id="lengthValue">16</div>
                     </div>
                     <input type="range" id="lengthSlider" min="6" max="32" value="16">
                     <div class="slider-labels">
-                        <span>6 (минимум)</span>
-                        <span>32 (максимум)</span>
+                        <span>6</span>
+                        <span>16</span>
+                        <span>32</span>
                     </div>
                 </div>
 
-                <!-- ЧЕКБОКСЫ СИМВОЛОВ -->
+                <!-- ТИПЫ СИМВОЛОВ -->
                 <div class="checkbox-section">
-                    <h3 style="color: #2c3e50; margin-bottom: 15px;">Типы символов:</h3>
+                    <h3 style="color: #2c3e50; margin-bottom: 12px;">Типы символов:</h3>
                     <div class="checkbox-grid">
                         <label class="checkbox-item">
                             <input type="checkbox" id="uppercase" checked>
-                            <span class="checkbox-label">Заглавные буквы (A-Z)</span>
+                            <span class="checkbox-label">Заглавные (A-Z)</span>
                             <span class="char-example">ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" id="lowercase" checked>
-                            <span class="checkbox-label">Строчные буквы (a-z)</span>
+                            <span class="checkbox-label">Строчные (a-z)</span>
                             <span class="char-example">abcdefghijklmnopqrstuvwxyz</span>
                         </label>
                         <label class="checkbox-item">
@@ -720,66 +750,66 @@
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" id="symbols" checked>
-                            <span class="checkbox-label">Специальные символы</span>
+                            <span class="checkbox-label">Спецсимволы</span>
                             <span class="char-example">!@#$%^&*()_+-=[]{}|;:,.<>?</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ - ВЕРНУЛ! -->
+                <!-- ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ -->
                 <div class="options-section">
                     <h3 class="options-title">
                         <i class="fas fa-plus-circle"></i>
-                        Дополнительные опции:
+                        Дополнительно:
                     </h3>
                     <div class="options-grid">
                         <label class="option-item">
                             <input type="checkbox" id="excludeSimilar">
-                            <span class="option-label">Исключить похожие символы</span>
+                            <span class="option-label">Исключить похожие</span>
                             <span class="option-hint">(1, l, I, 0, O)</span>
                         </label>
                         <label class="option-item">
                             <input type="checkbox" id="avoidRepetition">
-                            <span class="option-label">Избегать повторяющихся символов</span>
-                            <span class="option-hint">(нет повторов подряд)</span>
+                            <span class="option-label">Без повторов подряд</span>
+                            <span class="option-hint">(нет aa, bb, 11)</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- КНОПКИ ГЕНЕРАЦИИ -->
+                <!-- КНОПКИ -->
                 <div class="generate-buttons">
                     <button class="btn btn-primary" id="generateBtn">
-                        <i class="fas fa-key"></i> Сгенерировать пароль
+                        <i class="fas fa-key"></i> Сгенерировать
                     </button>
                     <button class="btn btn-secondary" id="generatePin">
-                        <i class="fas fa-mobile-alt"></i> Сгенерировать PIN-код
+                        <i class="fas fa-mobile-alt"></i> PIN-код
                     </button>
                 </div>
             </div>
 
-            <!-- ПРАВАЯ ПАНЕЛЬ - РЕЗУЛЬТАТ -->
+            <!-- ПРАВАЯ - РЕЗУЛЬТАТ (БЕЗ ПРОКРУТКИ!) -->
             <div class="result-panel">
-                <h2 class="panel-title"><i class="fas fa-lock"></i> Ваш пароль</h2>
+                <h2 class="panel-title"><i class="fas fa-lock"></i> Результат</h2>
                 
-                <!-- ОТОБРАЖЕНИЕ ПАРОЛЯ -->
+                <!-- ПАРОЛЬ -->
                 <div class="password-display-container">
                     <div class="password-display" id="passwordDisplay">
                         Нажмите "Сгенерировать"
                     </div>
                     <div class="password-actions">
-                        <button class="icon-btn copy-btn" id="copyBtn" title="Скопировать в буфер обмена">
+                        <button class="icon-btn copy-btn" id="copyBtn">
                             <i class="far fa-copy"></i> Копировать
                         </button>
-                        <button class="icon-btn refresh-btn" id="refreshBtn" title="Сгенерировать новый пароль">
+                        <button class="icon-btn refresh-btn" id="refreshBtn">
                             <i class="fas fa-redo"></i> Обновить
                         </button>
                     </div>
                 </div>
 
-                <!-- ИНДИКАТОР НАДЁЖНОСТИ -->
+                <!-- НАДЁЖНОСТЬ -->
                 <div class="strength-indicator">
                     <div class="strength-header">
-                        <span class="strength-title">Надёжность пароля:</span>
+                        <span class="strength-title">Надёжность:</span>
                         <div class="strength-value" id="strengthText">—</div>
                     </div>
                     <div class="strength-bar">
@@ -792,7 +822,7 @@
 
                 <!-- СТАТИСТИКА -->
                 <div class="stats-panel">
-                    <h3 style="color: #2c3e50; margin-bottom: 15px;">Статистика:</h3>
+                    <h3 style="color: #2c3e50; margin-bottom: 12px;">Статистика:</h3>
                     <div class="stats-grid">
                         <div class="stat-item">
                             <div class="stat-value" id="charCount">0</div>
@@ -821,14 +851,14 @@
                     </div>
                 </div>
 
-                <!-- ИСТОРИЯ ПАРОЛЕЙ -->
+                <!-- ИСТОРИЯ - ТЕПЕРЬ НИЖЕ, БЕЗ ПРОКРУТКИ ПРАВОЙ ЧАСТИ -->
                 <div class="history-panel">
                     <div class="history-header">
                         <h3 class="history-title">
                             <i class="fas fa-history"></i>
                             История паролей
                         </h3>
-                        <span style="color: #7f8c8d; font-size: 0.9rem;">
+                        <span style="color: #7f8c8d; font-size: 0.85rem;">
                             <span id="historyCount">0</span>/10
                         </span>
                     </div>
@@ -839,34 +869,30 @@
                         </div>
                     </div>
                     
-                    <div class="history-actions">
-                        <button class="btn btn-secondary" id="clearHistoryBtn" style="width: 100%;">
-                            <i class="fas fa-trash"></i> Очистить историю
-                        </button>
-                    </div>
+                    <button class="btn btn-secondary" id="clearHistoryBtn" style="width: 100%; margin-top: 5px;">
+                        <i class="fas fa-trash"></i> Очистить историю
+                    </button>
                 </div>
             </div>
         </div>
 
         <!-- ПОДВАЛ -->
         <footer>
-            <div class="footer-content">
-                <div class="copyright">
-                    <p>© 2026 SecurePass Generator | Школьный проект по информатике, 8 класс</p>
-                    <p>Использует криптографически безопасный алгоритм генерации случайных чисел</p>
-                </div>
+            <div class="copyright">
+                <p>© 2026 SecurePass Generator | Школьный проект, 8 класс</p>
+                <p style="font-size: 0.8rem; margin-top: 5px;">Криптографически безопасная генерация</p>
             </div>
         </footer>
     </div>
 
     <!-- УВЕДОМЛЕНИЕ -->
     <div class="notification" id="notification">
-        <i class="fas fa-check-circle" style="font-size: 1.5rem;"></i>
-        <span>Пароль скопирован в буфер обмена!</span>
+        <i class="fas fa-check-circle"></i>
+        <span>Пароль скопирован!</span>
     </div>
 
     <script>
-        // =============== ЛЕВАЯ ЧАСТЬ - НАСТРОЙКИ ===============
+        // =============== ЭЛЕМЕНТЫ ===============
         const lengthSlider = document.getElementById('lengthSlider');
         const lengthValue = document.getElementById('lengthValue');
         const uppercase = document.getElementById('uppercase');
@@ -876,13 +902,11 @@
         const excludeSimilar = document.getElementById('excludeSimilar');
         const avoidRepetition = document.getElementById('avoidRepetition');
         
-        // =============== ПРАВАЯ ЧАСТЬ - РЕЗУЛЬТАТ ===============
         const passwordDisplay = document.getElementById('passwordDisplay');
         const strengthText = document.getElementById('strengthText');
         const strengthFill = document.getElementById('strengthFill');
         const hackTime = document.getElementById('hackTime');
         
-        // Статистика
         const charCount = document.getElementById('charCount');
         const uppercaseCount = document.getElementById('uppercaseCount');
         const lowercaseCount = document.getElementById('lowercaseCount');
@@ -890,12 +914,10 @@
         const symbolsCount = document.getElementById('symbolsCount');
         const entropyValue = document.getElementById('entropyValue');
         
-        // История
         const historyList = document.getElementById('historyList');
         const historyCount = document.getElementById('historyCount');
         const clearHistoryBtn = document.getElementById('clearHistoryBtn');
         
-        // Кнопки
         const generateBtn = document.getElementById('generateBtn');
         const generatePin = document.getElementById('generatePin');
         const copyBtn = document.getElementById('copyBtn');
@@ -910,7 +932,7 @@
             symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
         };
         
-        // =============== ИСТОРИЯ ПАРОЛЕЙ ===============
+        // =============== ИСТОРИЯ ===============
         let passwordHistory = JSON.parse(localStorage.getItem('securepass_history')) || [];
         
         // =============== ИНИЦИАЛИЗАЦИЯ ===============
@@ -939,16 +961,14 @@
             clearHistoryBtn.addEventListener('click', clearHistory);
         }
         
-        // =============== ОБНОВЛЕНИЕ СЛАЙДЕРА ===============
         function updateSlider() {
             lengthValue.textContent = lengthSlider.value;
         }
         
-        // =============== ГЕНЕРАЦИЯ ПАРОЛЯ ===============
+        // =============== ГЕНЕРАЦИЯ ===============
         function generatePassword() {
             const length = parseInt(lengthSlider.value);
             
-            // Собираем символы с учётом исключения похожих
             let charset = '';
             if (uppercase.checked) {
                 charset += excludeSimilar.checked 
@@ -970,7 +990,7 @@
             }
             
             if (charset === '') {
-                passwordDisplay.textContent = '⚠️ Выберите типы символов!';
+                passwordDisplay.textContent = '⚠️ Выберите символы!';
                 return;
             }
             
@@ -979,7 +999,6 @@
             window.crypto.getRandomValues(randomValues);
             
             if (avoidRepetition.checked) {
-                // Без повторяющихся символов подряд
                 let lastChar = '';
                 for (let i = 0; i < length; i++) {
                     let char;
@@ -1002,7 +1021,6 @@
             updateDisplay(password);
         }
         
-        // =============== ГЕНЕРАЦИЯ PIN ===============
         function generatePinCode() {
             let pin = '';
             const randomValues = new Uint32Array(6);
@@ -1015,7 +1033,6 @@
             updateDisplay(pin);
         }
         
-        // =============== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ===============
         function updateDisplay(password) {
             passwordDisplay.textContent = password;
             updateStats(password);
@@ -1058,7 +1075,6 @@
             if (/[0-9]/.test(password)) score += 20;
             if (/[^A-Za-z0-9]/.test(password)) score += 30;
             
-            // Штраф за повторения
             if (avoidRepetition.checked) {
                 const repeats = (password.match(/(.)\1/g) || []).length;
                 score -= repeats * 15;
@@ -1098,15 +1114,10 @@
         // =============== КОПИРОВАНИЕ ===============
         function copyPassword() {
             const password = passwordDisplay.textContent;
-            
-            if (password.includes('Нажмите') || password.includes('Выберите')) {
-                return;
-            }
+            if (password.includes('Нажмите') || password.includes('Выберите')) return;
             
             navigator.clipboard.writeText(password)
-                .then(() => {
-                    showNotification('✅ Пароль скопирован!');
-                })
+                .then(() => showNotification('✅ Пароль скопирован!'))
                 .catch(() => {
                     const textArea = document.createElement('textarea');
                     textArea.value = password;
@@ -1118,25 +1129,17 @@
                 });
         }
         
-        // =============== УВЕДОМЛЕНИЕ ===============
         function showNotification(message) {
             const notif = notification;
             notif.querySelector('span').textContent = message;
             notif.classList.add('show');
-            setTimeout(() => {
-                notif.classList.remove('show');
-            }, 2000);
+            setTimeout(() => notif.classList.remove('show'), 2000);
         }
         
-        // =============== ИСТОРИЯ ПАРОЛЕЙ ===============
+        // =============== ИСТОРИЯ ===============
         function addToHistory(password) {
-            if (password.includes('Нажмите') || password.includes('Выберите')) {
-                return;
-            }
-            
-            if (passwordHistory.length > 0 && passwordHistory[0].password === password) {
-                return;
-            }
+            if (password.includes('Нажмите') || password.includes('Выберите')) return;
+            if (passwordHistory.length > 0 && passwordHistory[0].password === password) return;
             
             passwordHistory.unshift({
                 password: password,
@@ -1147,10 +1150,7 @@
                 })
             });
             
-            if (passwordHistory.length > 10) {
-                passwordHistory.pop();
-            }
-            
+            if (passwordHistory.length > 10) passwordHistory.pop();
             localStorage.setItem('securepass_history', JSON.stringify(passwordHistory));
             loadHistory();
         }
@@ -1160,12 +1160,7 @@
             historyCount.textContent = passwordHistory.length;
             
             if (passwordHistory.length === 0) {
-                historyList.innerHTML = `
-                    <div class="history-empty">
-                        <i class="fas fa-clock" style="font-size: 1.5rem; margin-bottom: 10px;"></i><br>
-                        Здесь появятся ранее сгенерированные пароли
-                    </div>
-                `;
+                historyList.innerHTML = '<div class="history-empty"><i class="fas fa-clock"></i> Здесь появятся ранее сгенерированные пароли</div>';
                 return;
             }
             
@@ -1175,9 +1170,7 @@
                 historyItem.innerHTML = `
                     <div style="flex: 1; min-width: 0;">
                         <div class="history-password">${item.password}</div>
-                        <div class="history-time">
-                            <i class="far fa-clock"></i> ${item.time}
-                        </div>
+                        <div class="history-time"><i class="far fa-clock"></i> ${item.time}</div>
                     </div>
                     <button class="history-copy" onclick="window.copyFromHistory('${item.password.replace(/'/g, "\\'")}')">
                         <i class="far fa-copy"></i>
@@ -1188,7 +1181,7 @@
         }
         
         function clearHistory() {
-            if (confirm('Очистить всю историю паролей?')) {
+            if (confirm('Очистить историю паролей?')) {
                 passwordHistory = [];
                 localStorage.removeItem('securepass_history');
                 loadHistory();
@@ -1197,10 +1190,7 @@
         }
         
         window.copyFromHistory = function(password) {
-            navigator.clipboard.writeText(password)
-                .then(() => {
-                    showNotification('✅ Пароль скопирован!');
-                });
+            navigator.clipboard.writeText(password).then(() => showNotification('✅ Пароль скопирован!'));
         };
         
         document.addEventListener('DOMContentLoaded', init);

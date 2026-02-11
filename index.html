@@ -235,6 +235,63 @@
             margin-left: 10px;
         }
 
+        /* ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ - ВЕРНУЛ! */
+        .options-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e8eaed;
+        }
+
+        .options-title {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e8eaed;
+            cursor: pointer;
+        }
+
+        .option-item:hover {
+            background: #e3f2fd;
+        }
+
+        .option-item input {
+            width: 18px;
+            height: 18px;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex-grow: 1;
+            color: #2c3e50;
+        }
+
+        .option-hint {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
         /* КНОПКИ ГЕНЕРАЦИИ */
         .generate-buttons {
             display: grid;
@@ -459,7 +516,7 @@
             color: #7f8c8d;
         }
 
-        /* ИСТОРИЯ - ИСПРАВЛЕННАЯ ВЕРСИЯ */
+        /* ИСТОРИЯ */
         .history-panel {
             background: #f8f9fa;
             border-radius: 15px;
@@ -669,6 +726,26 @@
                     </div>
                 </div>
 
+                <!-- ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ - ВЕРНУЛ! -->
+                <div class="options-section">
+                    <h3 class="options-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Дополнительные опции:
+                    </h3>
+                    <div class="options-grid">
+                        <label class="option-item">
+                            <input type="checkbox" id="excludeSimilar">
+                            <span class="option-label">Исключить похожие символы</span>
+                            <span class="option-hint">(1, l, I, 0, O)</span>
+                        </label>
+                        <label class="option-item">
+                            <input type="checkbox" id="avoidRepetition">
+                            <span class="option-label">Избегать повторяющихся символов</span>
+                            <span class="option-hint">(нет повторов подряд)</span>
+                        </label>
+                    </div>
+                </div>
+
                 <!-- КНОПКИ ГЕНЕРАЦИИ -->
                 <div class="generate-buttons">
                     <button class="btn btn-primary" id="generateBtn">
@@ -744,7 +821,7 @@
                     </div>
                 </div>
 
-                <!-- ИСТОРИЯ ПАРОЛЕЙ - ИСПРАВЛЕНА -->
+                <!-- ИСТОРИЯ ПАРОЛЕЙ -->
                 <div class="history-panel">
                     <div class="history-header">
                         <h3 class="history-title">
@@ -796,6 +873,8 @@
         const lowercase = document.getElementById('lowercase');
         const numbers = document.getElementById('numbers');
         const symbols = document.getElementById('symbols');
+        const excludeSimilar = document.getElementById('excludeSimilar');
+        const avoidRepetition = document.getElementById('avoidRepetition');
         
         // =============== ПРАВАЯ ЧАСТЬ - РЕЗУЛЬТАТ ===============
         const passwordDisplay = document.getElementById('passwordDisplay');
@@ -849,8 +928,8 @@
                 generatePassword();
             });
             
-            [uppercase, lowercase, numbers, symbols].forEach(cb => {
-                cb.addEventListener('change', generatePassword);
+            [uppercase, lowercase, numbers, symbols, excludeSimilar, avoidRepetition].forEach(cb => {
+                if (cb) cb.addEventListener('change', generatePassword);
             });
             
             generateBtn.addEventListener('click', generatePassword);
@@ -869,11 +948,26 @@
         function generatePassword() {
             const length = parseInt(lengthSlider.value);
             
+            // Собираем символы с учётом исключения похожих
             let charset = '';
-            if (uppercase.checked) charset += charsets.uppercase;
-            if (lowercase.checked) charset += charsets.lowercase;
-            if (numbers.checked) charset += charsets.numbers;
-            if (symbols.checked) charset += charsets.symbols;
+            if (uppercase.checked) {
+                charset += excludeSimilar.checked 
+                    ? charsets.uppercase.replace(/[IO]/g, '') 
+                    : charsets.uppercase;
+            }
+            if (lowercase.checked) {
+                charset += excludeSimilar.checked 
+                    ? charsets.lowercase.replace(/[il]/g, '') 
+                    : charsets.lowercase;
+            }
+            if (numbers.checked) {
+                charset += excludeSimilar.checked 
+                    ? charsets.numbers.replace(/[01]/g, '') 
+                    : charsets.numbers;
+            }
+            if (symbols.checked) {
+                charset += charsets.symbols;
+            }
             
             if (charset === '') {
                 passwordDisplay.textContent = '⚠️ Выберите типы символов!';
@@ -884,8 +978,25 @@
             const randomValues = new Uint32Array(length);
             window.crypto.getRandomValues(randomValues);
             
-            for (let i = 0; i < length; i++) {
-                password += charset[randomValues[i] % charset.length];
+            if (avoidRepetition.checked) {
+                // Без повторяющихся символов подряд
+                let lastChar = '';
+                for (let i = 0; i < length; i++) {
+                    let char;
+                    let attempts = 0;
+                    do {
+                        const randomIndex = randomValues[i] % charset.length;
+                        char = charset[randomIndex];
+                        attempts++;
+                        if (attempts > 10) break;
+                    } while (char === lastChar);
+                    password += char;
+                    lastChar = char;
+                }
+            } else {
+                for (let i = 0; i < length; i++) {
+                    password += charset[randomValues[i] % charset.length];
+                }
             }
             
             updateDisplay(password);
@@ -946,6 +1057,12 @@
             if (/[a-z]/.test(password)) score += 20;
             if (/[0-9]/.test(password)) score += 20;
             if (/[^A-Za-z0-9]/.test(password)) score += 30;
+            
+            // Штраф за повторения
+            if (avoidRepetition.checked) {
+                const repeats = (password.match(/(.)\1/g) || []).length;
+                score -= repeats * 15;
+            }
             
             let strength, level, percent, time;
             
@@ -1013,12 +1130,10 @@
         
         // =============== ИСТОРИЯ ПАРОЛЕЙ ===============
         function addToHistory(password) {
-            // Не добавляем служебные сообщения
             if (password.includes('Нажмите') || password.includes('Выберите')) {
                 return;
             }
             
-            // Не добавляем дубликаты подряд
             if (passwordHistory.length > 0 && passwordHistory[0].password === password) {
                 return;
             }

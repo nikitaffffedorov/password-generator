@@ -182,22 +182,6 @@
             font-size: 0.95rem;
         }
 
-        .char-example {
-            font-family: 'Consolas', monospace;
-            font-size: 0.8rem;
-            color: #7f8c8d;
-            background: #ecf0f1;
-            padding: 2px 6px;
-            border-radius: 4px;
-            display: none;
-        }
-
-        @media (min-width: 1000px) {
-            .char-example {
-                display: inline-block;
-            }
-        }
-
         /* ДОПОЛНИТЕЛЬНЫЕ ОПЦИИ */
         .options-section {
             background: white;
@@ -293,7 +277,7 @@
             border-color: #3498db;
         }
 
-        /* ПРАВАЯ ПАНЕЛЬ - РЕЗУЛЬТАТ (БЕЗ ПРОКРУТКИ!) */
+        /* ПРАВАЯ ПАНЕЛЬ - РЕЗУЛЬТАТ */
         .result-panel {
             background: white;
             padding: 25px;
@@ -409,18 +393,19 @@
 
         .hack-time {
             text-align: center;
-            font-size: 0.9rem;
-            color: #7f8c8d;
+            font-size: 0.95rem;
+            color: #2c3e50;
             padding: 8px;
             background: #ecf0f1;
             border-radius: 6px;
+            font-weight: 500;
         }
 
         /* ЦВЕТА */
-        .strength-weak { color: #e74c3c; background: #e74c3c; color: white; }
-        .strength-medium { color: #f39c12; background: #f39c12; color: white; }
-        .strength-strong { color: #27ae60; background: #27ae60; color: white; }
-        .strength-excellent { color: #3498db; background: #3498db; color: white; }
+        .strength-weak { background: #e74c3c; color: white; }
+        .strength-medium { background: #f39c12; color: white; }
+        .strength-strong { background: #27ae60; color: white; }
+        .strength-excellent { background: #3498db; color: white; }
 
         .bg-weak { background: #e74c3c; }
         .bg-medium { background: #f39c12; }
@@ -462,7 +447,7 @@
             color: #7f8c8d;
         }
 
-        /* ИСТОРИЯ - БЕЗ ПРОКРУТКИ, ВСТАВЛЕНА НИЖЕ */
+        /* ИСТОРИЯ */
         .history-panel {
             background: #f8f9fa;
             border-radius: 15px;
@@ -530,10 +515,6 @@
             border-radius: 4px;
         }
 
-        .history-copy:active {
-            background: #e3f2fd;
-        }
-
         .history-empty {
             text-align: center;
             color: #95a5a6;
@@ -584,7 +565,7 @@
             transform: translateY(0);
         }
 
-        /* =============== АДАПТАЦИЯ ПОД ТЕЛЕФОН =============== */
+        /* АДАПТАЦИЯ ПОД ТЕЛЕФОН */
         @media (max-width: 900px) {
             .app-container {
                 grid-template-columns: 1fr;
@@ -595,16 +576,8 @@
                 border-bottom: 2px solid #e8eaed;
             }
             
-            .char-example {
-                display: none;
-            }
-            
             h1 {
                 font-size: 1.8rem;
-            }
-            
-            .logo-icon {
-                font-size: 2.2rem;
             }
         }
 
@@ -621,78 +594,30 @@
                 font-size: 1.6rem;
             }
             
-            .subtitle {
-                font-size: 0.9rem;
-            }
-            
-            .settings-panel, .result-panel {
-                padding: 18px;
-            }
-            
-            .panel-title {
-                font-size: 1.3rem;
-                margin-bottom: 15px;
-            }
-            
             .password-display {
                 font-size: 1.5rem;
-                min-height: 60px;
             }
             
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            .stat-value {
-                font-size: 1.4rem;
-            }
-            
-            .btn, .icon-btn {
-                padding: 14px;
-                font-size: 0.95rem;
-            }
         }
 
         @media (max-width: 400px) {
-            header {
-                padding: 15px 12px;
-            }
-            
             h1 {
                 font-size: 1.4rem;
             }
             
-            .logo-icon {
-                font-size: 2rem;
-            }
-            
             .password-display {
                 font-size: 1.3rem;
-                padding: 10px;
             }
             
             .stats-grid {
                 grid-template-columns: 1fr;
             }
             
-            .btn, .icon-btn {
-                padding: 12px;
-                font-size: 0.9rem;
-            }
-            
             .option-hint {
                 display: none;
-            }
-        }
-
-        /* ДЛЯ ПЛАНШЕТОВ */
-        @media (min-width: 901px) and (max-width: 1100px) {
-            .char-example {
-                display: none;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -736,22 +661,18 @@
                         <label class="checkbox-item">
                             <input type="checkbox" id="uppercase" checked>
                             <span class="checkbox-label">Заглавные (A-Z)</span>
-                            <span class="char-example">ABCDEFGHIJKLMNOPQRSTUVWXYZ</span>
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" id="lowercase" checked>
                             <span class="checkbox-label">Строчные (a-z)</span>
-                            <span class="char-example">abcdefghijklmnopqrstuvwxyz</span>
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" id="numbers" checked>
                             <span class="checkbox-label">Цифры (0-9)</span>
-                            <span class="char-example">0123456789</span>
                         </label>
                         <label class="checkbox-item">
                             <input type="checkbox" id="symbols" checked>
                             <span class="checkbox-label">Спецсимволы</span>
-                            <span class="char-example">!@#$%^&*()_+-=[]{}|;:,.<>?</span>
                         </label>
                     </div>
                 </div>
@@ -787,7 +708,7 @@
                 </div>
             </div>
 
-            <!-- ПРАВАЯ - РЕЗУЛЬТАТ (БЕЗ ПРОКРУТКИ!) -->
+            <!-- ПРАВАЯ - РЕЗУЛЬТАТ -->
             <div class="result-panel">
                 <h2 class="panel-title"><i class="fas fa-lock"></i> Результат</h2>
                 
@@ -851,7 +772,7 @@
                     </div>
                 </div>
 
-                <!-- ИСТОРИЯ - ТЕПЕРЬ НИЖЕ, БЕЗ ПРОКРУТКИ ПРАВОЙ ЧАСТИ -->
+                <!-- ИСТОРИЯ -->
                 <div class="history-panel">
                     <div class="history-header">
                         <h3 class="history-title">
@@ -1063,92 +984,105 @@
             entropyValue.textContent = entropy.toFixed(1);
         }
         
-        // =============== ОЦЕНКА НАДЁЖНОСТИ ===============
-function updateStrength(password) {
-    let score = 0;
-    const length = password.length;
-    
-    score += length * 3;
-    
-    if (/[A-Z]/.test(password)) score += 20;
-    if (/[a-z]/.test(password)) score += 20;
-    if (/[0-9]/.test(password)) score += 20;
-    if (/[^A-Za-z0-9]/.test(password)) score += 30;
-    
-    if (avoidRepetition.checked) {
-        const repeats = (password.match(/(.)\1/g) || []).length;
-        score -= repeats * 15;
-    }
-    
-    // ========== ТОЧНЫЙ РАСЧЁТ ВРЕМЕНИ ВЗЛОМА ==========
-    // 1. Определяем размер алфавита
-    let charsetSize = 0;
-    if (/[A-Z]/.test(password)) charsetSize += 26;
-    if (/[a-z]/.test(password)) charsetSize += 26;
-    if (/[0-9]/.test(password)) charsetSize += 10;
-    if (/[^A-Za-z0-9]/.test(password)) charsetSize += 32;
-    if (charsetSize === 0) charsetSize = 1;
-    
-    // 2. Количество комбинаций
-    const combinations = Math.pow(charsetSize, length);
-    
-    // 3. Скорость взлома: 1 миллиард в секунду
-    const guessesPerSecond = 1000000000;
-    let seconds = combinations / guessesPerSecond;
-    
-    // 4. Переводим в годы
-    const secondsInYear = 60 * 60 * 24 * 365;
-    const years = seconds / secondsInYear;
-    
-    // 5. Формируем текст времени взлома
-    let timeText;
-    if (years < 0.001) {
-        timeText = 'менее секунды';
-    } else if (years < 0.0167) { // меньше 1 дня
-        const hours = Math.round(seconds / 3600);
-        timeText = hours + ' часов';
-    } else if (years < 1) {
-        const days = Math.round(seconds / 86400);
-        timeText = days + ' дней';
-    } else if (years < 100) {
-        timeText = Math.round(years) + ' лет';
-    } else if (years < 1000) {
-        timeText = Math.round(years / 10) * 10 + ' лет';
-    } else if (years < 10000) {
-        timeText = Math.round(years / 100) * 100 + ' лет';
-    } else if (years < 1000000) {
-        timeText = Math.round(years / 1000) * 1000 + ' лет';
-    } else {
-        timeText = 'более 1 миллиона лет';
-    }
-    
-    // ========== ОЦЕНКА НАДЁЖНОСТИ ==========
-    let strength, level, percent;
-    
-    if (score >= 100) {
-        strength = 'ОТЛИЧНО 🔒';
-        level = 'strength-excellent';
-        percent = 100;
-    } else if (score >= 70) {
-        strength = 'СИЛЬНЫЙ 👍';
-        level = 'strength-strong';
-        percent = 75;
-    } else if (score >= 40) {
-        strength = 'СРЕДНИЙ ⚠️';
-        level = 'strength-medium';
-        percent = 50;
-    } else {
-        strength = 'СЛАБЫЙ ❌';
-        level = 'strength-weak';
-        percent = 25;
-    }
-    
-    strengthText.textContent = strength;
-    strengthText.className = 'strength-value ' + level;
-    strengthFill.style.width = percent + '%';
-    strengthFill.className = 'strength-fill bg-' + level.split('-')[1];
-    hackTime.textContent = `⏱️ Взлом за: ${timeText}`;
-}
+        // =============== ОЦЕНКА НАДЁЖНОСТИ С ТОЧНЫМ ВРЕМЕНЕМ ===============
+        function updateStrength(password) {
+            let score = 0;
+            const length = password.length;
+            
+            score += length * 3;
+            
+            if (/[A-Z]/.test(password)) score += 20;
+            if (/[a-z]/.test(password)) score += 20;
+            if (/[0-9]/.test(password)) score += 20;
+            if (/[^A-Za-z0-9]/.test(password)) score += 30;
+            
+            if (avoidRepetition.checked) {
+                const repeats = (password.match(/(.)\1/g) || []).length;
+                score -= repeats * 15;
+            }
+            
+            // ========== ТОЧНЫЙ РАСЧЁТ ВРЕМЕНИ ВЗЛОМА ==========
+            // 1. Определяем размер алфавита
+            let charsetSize = 0;
+            if (/[A-Z]/.test(password)) charsetSize += 26;
+            if (/[a-z]/.test(password)) charsetSize += 26;
+            if (/[0-9]/.test(password)) charsetSize += 10;
+            if (/[^A-Za-z0-9]/.test(password)) charsetSize += 32;
+            if (charsetSize === 0) charsetSize = 1;
+            
+            // 2. Количество комбинаций
+            const combinations = Math.pow(charsetSize, length);
+            
+            // 3. Скорость взлома: 1 миллиард в секунду
+            const guessesPerSecond = 1000000000;
+            let seconds = combinations / guessesPerSecond;
+            
+            // 4. Переводим в годы
+            const secondsInYear = 60 * 60 * 24 * 365;
+            const years = seconds / secondsInYear;
+            
+            // 5. Формируем текст времени взлома
+            let timeText;
+            
+            if (years < 0.00000001) {
+                timeText = 'менее 1 секунды';
+            } else if (years < 0.0000001) {
+                timeText = '1 секунда';
+            } else if (years < 0.000001) {
+                timeText = Math.round(seconds * 1000) + ' миллисекунд';
+            } else if (years < 0.001) {
+                timeText = Math.round(seconds) + ' секунд';
+            } else if (years < 0.0167) { // меньше 1 дня
+                const minutes = Math.round(seconds / 60);
+                timeText = minutes + ' минут';
+            } else if (years < 1) {
+                const days = Math.round(seconds / 86400);
+                timeText = days + ' дней';
+            } else if (years < 2) {
+                timeText = '1 год';
+            } else if (years < 5) {
+                timeText = Math.round(years) + ' года';
+            } else if (years < 100) {
+                timeText = Math.round(years) + ' лет';
+            } else if (years < 1000) {
+                timeText = Math.round(years / 10) * 10 + ' лет';
+            } else if (years < 100000) {
+                timeText = Math.round(years / 100) * 100 + ' лет';
+            } else if (years < 10000000) {
+                timeText = Math.round(years / 1000) * 1000 + ' лет';
+            } else if (years < 1000000000) {
+                timeText = Math.round(years / 1000000) + ' миллионов лет';
+            } else {
+                timeText = 'более 1 миллиарда лет';
+            }
+            
+            // ========== ОЦЕНКА НАДЁЖНОСТИ ==========
+            let strength, level, percent;
+            
+            if (score >= 100) {
+                strength = 'ОТЛИЧНО 🔒';
+                level = 'strength-excellent';
+                percent = 100;
+            } else if (score >= 70) {
+                strength = 'СИЛЬНЫЙ 👍';
+                level = 'strength-strong';
+                percent = 75;
+            } else if (score >= 40) {
+                strength = 'СРЕДНИЙ ⚠️';
+                level = 'strength-medium';
+                percent = 50;
+            } else {
+                strength = 'СЛАБЫЙ ❌';
+                level = 'strength-weak';
+                percent = 25;
+            }
+            
+            strengthText.textContent = strength;
+            strengthText.className = 'strength-value ' + level;
+            strengthFill.style.width = percent + '%';
+            strengthFill.className = 'strength-fill bg-' + level.split('-')[1];
+            hackTime.textContent = `⏱️ Взлом за: ${timeText}`;
+        }
         
         // =============== КОПИРОВАНИЕ ===============
         function copyPassword() {
